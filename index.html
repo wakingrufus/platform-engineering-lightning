@@ -1,0 +1,248 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>reveal.js</title>
+
+    <link rel="stylesheet" href="dist/reset.css">
+    <link rel="stylesheet" href="dist/reveal.css">
+    <link rel="stylesheet" href="dist/theme/black.css">
+
+    <!-- Theme used for syntax highlighted code -->
+    <link rel="stylesheet" href="plugin/highlight/monokai.css">
+    <style>
+        .grid-area {
+            display: grid;
+            grid-auto-flow: column;
+        }
+
+        .reveal pre code {
+            max-height: none;
+        }
+
+        .reveal pre {
+            width: 100%;
+        }
+
+        .inline-image img {
+            margin: 0;
+        }
+
+        .inline-image {
+            display: inline-flex;
+        }
+    </style>
+</head>
+<body>
+<div class="reveal">
+    <div class="slides">
+        <section data-timing="60">
+            <h1>Platform Engineering</h1>
+            <p>
+                <img style="vertical-align: middle" alt="kotlin logo" src="kong.png" height="400" width="500">
+            </p>
+            <aside class="notes">
+                tag yourself: your devs are mario, donkey kong... product,
+                and princess is of course where you are always trying to get to: production
+            </aside>
+        </section>
+        <section data-timing="30s">
+            <h1>About Me</h1>
+            <aside class="notes">
+                You can also find me on the Chicago Tech and Kotlin slacks and the CJUG discord
+            </aside>
+            <h3>John Burns</h3>
+            <div class="grid-area">
+                <div style="text-align: left">
+                    <p>Staff Platform Engineer @ GrubHub</p>
+                    <p>CKUG Co-Organizer</p>
+                    <p>ktlint-gradle Maintainer</p>
+                    <p class="inline-image">
+                        <img alt="github logo" src="github-logo.png" height="48" width="48"/>
+                        <span style="padding-left: .5em; padding-right: 2em;">wakingrufus</span></p>
+                    <p class="inline-image"><img alt="fediverse logo" src="fediverse.png" height="48" width="48"/>
+                        <span style="padding-left: .5em">@wakingrufus@bigshoulders.city</span>
+                    </p>
+                </div>
+            </div>
+        </section>
+        <section data-timing="60">
+            <img alt="GrubHub logo" src="gh-logo.png" height="194" width="688">
+            <aside class="notes">
+                HQ is chicago
+                we have been publicly traded and operating off our own revenue and profits since 2014
+                What I do: Service Platform Engineering: JVM Stewardship
+            </aside>
+            <ul>
+                <li>Unlimited PTO</li>
+                <li>8-16 weeks of parental leave</li>
+                <li>4.5 day work week</li>
+                <li>Based in Chicago</li>
+            </ul>
+        </section>
+            <section data-auto-animate data-timing="90">
+                <h2>History</h2>
+                <aside class="notes">
+                    first we had devs writing code
+                    throw it over the wall to
+                    ops who run the code
+                </aside>
+                <p data-id="content">
+                    <span class="fragment">Dev</span>
+                    <span class="fragment">|</span>
+                    <span class="fragment">Ops</span>
+                </p>
+            </section>
+        <section data-auto-animate data-timing="90">
+            <h2>History</h2>
+            <aside class="notes">
+            </aside>
+            <p data-id="content">
+                <span>DevOps</span>
+            </p>
+        </section>
+        <section data-auto-animate data-timing="120">
+            <h2>Problems with DevOps</h2>
+            <aside class="notes">
+                DevOps solves a lot of problems, but presents some new ones
+                variety: 20 teams means 20 different ci pipes, cd pipes, build systems, etc
+                duplication: 1 or 2 ppl on every team solving the same problems
+                commodities: 90% of the time product delivery devs just want to write code and have it run
+            </aside>
+            <ul>
+                <li class="fragment">Too much variety</li>
+                <li class="fragment">Duplication of effort</li>
+                <li class="fragment">Lack of commodities</li>
+            </ul>
+        </section>
+        <section data-auto-animate data-timing="120">
+            <h2>How It Started</h2>
+            <aside class="notes">
+                Team to build ci/cd/observability tooling
+                dev teams are customers, and retain autonomy
+                it was called a "DevOps" team.
+                name is terrible and an oxymoron
+            </aside>
+            <ul>
+                <li class="fragment">"DevOps" team</li>
+                <li class="fragment">Scope was too small</li>
+            </ul>
+        </section>
+        <section data-auto-animate data-timing="120">
+            <h2>More Scope</h2>
+            <aside class="notes">
+                build tooling: eg bazel, gradle plugins
+                platform services: kafka or other message buses. API gateway, discovery, cloud config server
+                Runtime libraries: Spring boot extensions
+            </aside>
+            <ul>
+                <li class="fragment">Ecosystem-specific build tooling</li>
+                <li class="fragment">Platform Services</li>
+                <li class="fragment">Runtime libraries</li>
+            </ul>
+        </section>
+        <section data-auto-animate data-timing="120">
+            <h2>Guiding Principles</h2>
+            <aside class="notes">
+               how do you keep this team from just becoming the new "Ops" team?
+            </aside>
+            <ul>
+                <li class="fragment">Golden path (not a golden cage)</li>
+                <li class="fragment">Carrot vs Stick</li>
+            </ul>
+        </section>
+        <section data-auto-animate data-timing="120">
+            <h2>How It's Going</h2>
+            <aside class="notes">
+                Infrastructure should be very impl agnostic. e.g. deals in docker containers of anything
+                provides interfaces to plugin platform-specific overrides
+                service platform will have some agnostic bits, such as platform services,
+                but mostly impl-specific tooling to improve the DX in your primary ecosystems
+            </aside>
+            <div class="grid-area">
+                <div class="fragment">
+                    <h3>Infrastructure Platform</h3>
+                    <ul>
+                        <li class="fragment">CI tooling (jenkins)</li>
+                        <li class="fragment">CD tooling (k8s, spinnaker)</li>
+                        <li class="fragment">Infrastructure-as-Code (terraform, pulumi)</li>
+                        <li class="fragment">Networking (elbs, edge/CDN services)</li>
+                        <li class="fragment">Service Mesh (envoy, istio)</li>
+                    </ul>
+                </div>
+                <div class="fragment">
+                    <h3>Service Platform</h3>
+                    <ul>
+                        <li class="fragment">Build tooling (bazel, maven/gradle plugins)</li>
+                        <li class="fragment">Platform Services</li>
+                        <li class="fragment">Runtime libraries</li>
+                        <li class="fragment">Service Mesh</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        <section data-auto-animate data-timing="120">
+            <h2>Developer Experience</h2>
+            <aside class="notes">
+                this all adds up to more than the sum of its parts
+                it becomes DX. to tie it all together we make IDP
+                backstage, cortex, in-house
+            </aside>
+            <ul>
+                <li class="fragment">IDP: "Platform" vs "Portal"</li>
+                <li class="fragment">Deployment state</li>
+                <li class="fragment">Adoption</li>
+                <li class="fragment">Security</li>
+            </ul>
+        </section>
+        <section>
+            <h2>What's next?</h2>
+            <aside class="notes">
+                to go deeper on how this can all be implemented, I have an upcoming talk
+                When ppl are involved, there are no purely technical solutions
+                when you look at DX holistically, you realize IDP is only half the solution,
+                and the other is conditions of the org as a work environment
+            </aside>
+            <p class="fragment">
+                <a href="https://devnexus.com/">Building a Great Developer Experience</a> - Me (Coming in 2024)
+            </p>
+            <p class="fragment">
+                <a href="https://osf.io/preprints/psyarxiv/qz43x">Psychological Affordances Can Provide a Missing Explanatory Layer for Why Interventions to Improve Developer Experience Take Hold or Fail</a> - <a href="https://www.drcathicks.com/">Cat Hicks</a>
+            </p>
+        </section>
+        <section data-timing="10">
+            <div class="grid-area">
+                <div style="text-align: left">
+                    <div><a href="https://wakingrufus.github.io/platform-engineering-lightning/">https://wakingrufus.github.io/kotlin-for-java-devs/</a></div>
+                    <p class="inline-image">
+                        <img alt="github logo" src="github-logo.png" height="48" width="48"/>
+                        <span style="padding-left: .5em">wakingrufus</span>
+                    </p>
+                    <p class="inline-image"><img alt="fediverse logo" src="fediverse.png" height="48" width="48"/>
+                        <span style="padding-left: .5em">@wakingrufus@bigshoulders.city</span>
+                    </p>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+<script src="dist/reveal.js"></script>
+<script src="plugin/notes/notes.js"></script>
+<script src="plugin/markdown/markdown.js"></script>
+<script src="plugin/highlight/highlight.js"></script>
+<script>
+    // More info about initialization & config:
+    // - https://revealjs.com/initialization/
+    // - https://revealjs.com/config/
+    Reveal.initialize({
+        hash: true,
+        defaultTiming: 60,
+        // Learn about plugins: https://revealjs.com/plugins/
+        plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
+    });
+</script>
+</body>
+</html>
